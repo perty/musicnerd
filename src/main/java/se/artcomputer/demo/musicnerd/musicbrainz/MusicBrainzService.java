@@ -7,7 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import se.artcomputer.demo.musicnerd.musicbrainz.exception.GatewayException;
+import se.artcomputer.demo.musicnerd.exception.GatewayException;
 
 @Service
 public class MusicBrainzService {

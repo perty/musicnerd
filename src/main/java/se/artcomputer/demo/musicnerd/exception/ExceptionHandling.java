@@ -1,4 +1,4 @@
-package se.artcomputer.demo.musicnerd.musicbrainz.exception;
+package se.artcomputer.demo.musicnerd.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

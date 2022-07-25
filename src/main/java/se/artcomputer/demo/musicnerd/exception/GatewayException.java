@@ -1,4 +1,4 @@
-package se.artcomputer.demo.musicnerd.musicbrainz.exception;
+package se.artcomputer.demo.musicnerd.exception;
 
 public class GatewayException extends RuntimeException {
     public GatewayException(String message) {
