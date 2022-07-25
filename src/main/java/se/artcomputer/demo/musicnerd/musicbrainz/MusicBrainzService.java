@@ -35,6 +35,6 @@ public class MusicBrainzService {
             return new ArtistResponse(new ArtistName(musicBrainzResponse.name()));
         }
         LOG.error("Null response from MusicBrainz for id: {}", musicBrainzId);
-        throw new GatewayException();
+        throw new GatewayException("Null response from MusicBrainz");
     }
 }
