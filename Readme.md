@@ -4,9 +4,9 @@ Get that info on that artist with this remarkable service that collects data fro
 
 ## Linking information
 
-Given the MBID (MusicBrainz Identifier) MusicNerd will collect the information from `MusicBrainz` database. From that information the `Wikidata` service is queried to get the story on `Wikipedia`.
+Given the `MBID (MusicBrainz Identifier)` MusicNerd will collect the information from `MusicBrainz` database. From that information the `Wikidata` service is queried to get the story on `Wikipedia`.
 
-The `MusicBrainz` is also used to find the cover art from `Cover Art Archive` database.
+The `MusicBrainz` response is also used to find the cover art from `Cover Art Archive` database.
 
 ### Sequence diagram
 
@@ -34,7 +34,7 @@ end
 
 ## Architecture
 
-The Music Nerd to serve the needs of users from all over the world and needs to be there all the time. Therefore, the architecture must have the qualities to match these business goals.
+The service serves the needs of users from all over the world and needs to be there all the time. Therefore, the architecture must have the qualities to match these business goals.
 
 ### Scalability
 The service is deployed behind auto-scaling load balancer that increase and decrease the number of instances as the load varies.
