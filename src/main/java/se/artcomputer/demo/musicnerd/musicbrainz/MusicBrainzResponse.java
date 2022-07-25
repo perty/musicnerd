@@ -8,5 +8,7 @@ public record MusicBrainzResponse(String name,
                                   String disambiguation,
                                   String gender,
                                   String country,
-                                  @JsonAlias({"release-groups"}) List<ReleaseGroup> releaseGroups) {
+                                  @JsonAlias({"release-groups"}) List<ReleaseGroup> releaseGroups,
+                                  List<Relation> relations
+) {
 }

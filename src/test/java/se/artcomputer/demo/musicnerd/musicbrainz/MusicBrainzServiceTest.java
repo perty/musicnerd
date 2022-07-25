@@ -23,6 +23,8 @@ class MusicBrainzServiceTest {
     private static final String SOME_GENDER = "Female";
     private static final String SOME_COUNTRY = "SE";
     private static final String SOME_MBID = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
+    public static final String SOME_WIKIDATA_URL = "http://wikidata";
+    public static final String WIKIDATA_TYPE = "wikidata";
     private MockWebServer mockBackEnd;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private MusicBrainzService musicBrainzService;
@@ -31,8 +33,7 @@ class MusicBrainzServiceTest {
     void setUp() throws IOException {
         mockBackEnd = new MockWebServer();
         mockBackEnd.start();
-        String baseUrl = String.format("http://localhost:%s",
-                mockBackEnd.getPort());
+        String baseUrl = String.format("http://localhost:%s", mockBackEnd.getPort());
         musicBrainzService = new MusicBrainzService(baseUrl);
     }
 
@@ -48,7 +49,8 @@ class MusicBrainzServiceTest {
                 SOME_DISAMBIGUATION,
                 SOME_GENDER,
                 SOME_COUNTRY,
-                Collections.emptyList()
+                Collections.emptyList(),
+                Collections.singletonList(new Relation(WIKIDATA_TYPE, new RelationUrl(SOME_WIKIDATA_URL)))
         );
         mockBackEnd.enqueue(new MockResponse()
                 .setBody(objectMapper.writeValueAsString(mockResponse))
@@ -60,5 +62,6 @@ class MusicBrainzServiceTest {
         assertThat(artist.artistDisambiguation(), is(new ArtistDisambiguation(SOME_DISAMBIGUATION)));
         assertThat(artist.artistGender(), is(new ArtistGender(SOME_GENDER)));
         assertThat(artist.artistCountry(), is(new ArtistCountry(SOME_COUNTRY)));
+        assertThat(artist.artistWikiUrl(), is(new ArtistWikiUrl(SOME_WIKIDATA_URL)));
     }
 }

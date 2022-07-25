@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import se.artcomputer.demo.musicnerd.exception.GatewayException;
 
+import java.util.Optional;
+
 @Service
 public class MusicBrainzService {
     private static final Logger LOG = LoggerFactory.getLogger(MusicBrainzService.class);
@@ -36,10 +38,19 @@ public class MusicBrainzService {
                     new ArtistName(musicBrainzResponse.name()),
                     new ArtistGender(musicBrainzResponse.gender()),
                     new ArtistDisambiguation(musicBrainzResponse.disambiguation()),
-                    new ArtistCountry(musicBrainzResponse.country())
+                    new ArtistCountry(musicBrainzResponse.country()),
+                    new ArtistWikiUrl(getWikidataUrl(musicBrainzResponse))
             );
         }
         LOG.error("Null response from MusicBrainz for id: {}", musicBrainzId);
         throw new GatewayException("Null response from MusicBrainz");
+    }
+
+    private String getWikidataUrl(MusicBrainzResponse musicBrainzResponse) {
+        Optional<Relation> wikidata = musicBrainzResponse.relations().stream().filter(r -> r.type().equals("wikidata")).findFirst();
+        if (wikidata.isPresent()) {
+            return wikidata.get().url().resource();
+        }
+        return "";
     }
 }

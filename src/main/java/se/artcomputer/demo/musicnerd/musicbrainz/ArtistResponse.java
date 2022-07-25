@@ -4,6 +4,7 @@ public record ArtistResponse(
         ArtistName artistName,
         ArtistGender artistGender,
         ArtistDisambiguation artistDisambiguation,
-        ArtistCountry artistCountry
+        ArtistCountry artistCountry,
+        ArtistWikiUrl artistWikiUrl
 ) {
 }
