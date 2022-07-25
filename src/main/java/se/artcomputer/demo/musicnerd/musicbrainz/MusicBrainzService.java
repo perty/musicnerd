@@ -19,7 +19,7 @@ public class MusicBrainzService {
         this.webClient = WebClient
                 .builder()
                 .baseUrl(baseURL)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
 
@@ -27,12 +27,15 @@ public class MusicBrainzService {
         MusicBrainzResponse musicBrainzResponse =
                 webClient
                         .get()
-                        .uri("/ws/2/artist/{mbid}?&fmt=json&inc=url-rels+release-groups", musicBrainzId.mbid())
+                        .uri("/ws/2/artist/{mbid}?&inc=url-rels+release-groups", musicBrainzId.mbid())
                         .retrieve()
                         .bodyToMono(MusicBrainzResponse.class)
                         .block();
         if (musicBrainzResponse != null) {
-            return new ArtistResponse(new ArtistName(musicBrainzResponse.name()));
+            return new ArtistResponse(
+                    new ArtistName(musicBrainzResponse.name()),
+                    new ArtistGender(musicBrainzResponse.gender())
+            );
         }
         LOG.error("Null response from MusicBrainz for id: {}", musicBrainzId);
         throw new GatewayException("Null response from MusicBrainz");

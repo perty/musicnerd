@@ -1,4 +1,4 @@
 package se.artcomputer.demo.musicnerd.musicbrainz;
 
-public record ArtistResponse(ArtistName artistName) {
+public record ArtistResponse(ArtistName artistName, ArtistGender artistGender) {
 }
