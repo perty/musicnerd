@@ -34,7 +34,9 @@ public class MusicBrainzService {
         if (musicBrainzResponse != null) {
             return new ArtistResponse(
                     new ArtistName(musicBrainzResponse.name()),
-                    new ArtistGender(musicBrainzResponse.gender())
+                    new ArtistGender(musicBrainzResponse.gender()),
+                    new ArtistDisambiguation(musicBrainzResponse.disambiguation()),
+                    new ArtistCountry(musicBrainzResponse.country())
             );
         }
         LOG.error("Null response from MusicBrainz for id: {}", musicBrainzId);

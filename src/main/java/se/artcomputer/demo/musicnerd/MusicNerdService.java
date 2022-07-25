@@ -15,6 +15,12 @@ public class MusicNerdService {
 
     public MusicNerdResponse get(MusicBrainzId musicBrainzId) {
         ArtistResponse artistResponse = musicBrainzService.getArtist(musicBrainzId);
-        return new MusicNerdResponse(musicBrainzId, artistResponse.artistName());
+        return new MusicNerdResponse(
+                musicBrainzId,
+                artistResponse.artistName(),
+                artistResponse.artistGender(),
+                artistResponse.artistDisambiguation(),
+                artistResponse.artistCountry()
+        );
     }
 }
