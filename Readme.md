@@ -1,6 +1,6 @@
 # Music Nerd
 
-Get that info on that album with this remarkable service that collects data from not less than 4 services on the internet!
+Get that info on that artist with this remarkable service that collects data from not less than 4 services on the internet!
 
 ## Linking information
 
@@ -20,12 +20,13 @@ participant WP as Wikipedia
 participant CA as Cover Art Archive
 user->>MN: GET /musify/music-artist/details/{mbid} 
 MN->>MB: GET artist/{mbid}
-activate MB
 MB-->>MN: artist-urls
-par MN to WD
+par MusicNerd to Wikidata and Wikipedia
     MN->>WD: GET Entity data
     WD-->>MN: wikipedia link
-and MN to CA
+    MN->>WP: GET page/summary
+    WP-->>MN: summary
+and MusicNerd to Cover Art Archive
     MN->>CA: GET /release-group
     CA-->>MN: cover arts
 end
@@ -47,8 +48,19 @@ The service is deployed in several availability zones across the world to ensure
 The minimum number of instances in each zone is two, to ensure availability during maintenance.
 
 ### Security
+The correctness and availability ot the information presented by the service is depending on the services used. 
 
-The correctness and availability ot the information presented by the service is depending on the services used. MusicNerd will respond with a `Gateway Timeout (504)` when any of those services is not available.
+MusicNerd will respond with a `Gateway Timeout (504)` when any of those services is not available.
 
+All information is public and users are anonymous.
 
+### Testability
+The service is depending on 4 other services and those needs to be simulated in some way. 
 
+### Maintainability
+The service logs all errors and alarms are set up to monitor the logs. The alarms are sent to a dedicated Slack channel.
+
+The service can run on a local machine and still present production data as it is public. Therefore, any issues can be examined locally.
+
+### Usability
+The service exposes a REST API publicly which is great, from an architectural standpoint on usability.
