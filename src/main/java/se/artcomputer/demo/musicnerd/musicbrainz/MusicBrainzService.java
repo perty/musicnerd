@@ -39,7 +39,8 @@ public class MusicBrainzService {
                     new ArtistGender(musicBrainzResponse.gender()),
                     new ArtistDisambiguation(musicBrainzResponse.disambiguation()),
                     new ArtistCountry(musicBrainzResponse.country()),
-                    new ArtistWikiUrl(getWikidataUrl(musicBrainzResponse))
+                    new ArtistWikiUrl(getWikidataUrl(musicBrainzResponse)),
+                    musicBrainzResponse.releaseGroups()
             );
         }
         LOG.error("Null response from MusicBrainz for id: {}", musicBrainzId);
