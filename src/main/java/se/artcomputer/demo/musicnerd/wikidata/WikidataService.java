@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import se.artcomputer.demo.musicnerd.exception.NotFoundException;
@@ -15,12 +14,9 @@ public class WikidataService {
 
     public WikidataService(@Value("${wikidata-service}") String baseUrl) {
         final int size = 16 * 1024 * 1024;
-        final ExchangeStrategies strategies = ExchangeStrategies.builder()
-                .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
-                .build();
         this.webClient = WebClient
                 .builder()
-                .exchangeStrategies(strategies)
+                .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
                 .baseUrl(baseUrl)
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();
