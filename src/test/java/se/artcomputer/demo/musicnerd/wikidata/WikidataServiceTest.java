@@ -49,7 +49,7 @@ class WikidataServiceTest {
                 .setBody(objectMapper.writeValueAsString(mockResponse))
                 .addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE));
 
-        WikipediaLink wikipediaLink = wikidataService.getWikipediaLink(SOME_WIKI_DATA_URL_ENTITY_ID);
+        WikipediaLink wikipediaLink = wikidataService.getWikipediaLink(SOME_WIKI_DATA_URL_ENTITY_ID).block();
 
         assertThat(wikipediaLink, is(new WikipediaLink(SOME_WIKIPEDIA_URL)));
     }

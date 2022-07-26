@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import se.artcomputer.demo.musicnerd.exception.NotFoundException;
 
 @Service
@@ -25,23 +26,25 @@ public class WikidataService {
                 .build();
     }
 
-    public WikipediaLink getWikipediaLink(String wikidataUrl) {
+    public Mono<WikipediaLink> getWikipediaLink(String wikidataUrl) {
         String wikidataEntityId = wikidataUrl.substring(wikidataUrl.lastIndexOf('/') + 1);
-        WikidataResponse wikidataResponse = webClient
+        Mono<WikidataResponse> wikidataResponse = webClient
                 .get()
                 .uri("/wiki/Special:EntityData/" + wikidataEntityId + ".json")
                 .retrieve()
-                .bodyToMono(WikidataResponse.class)
-                .block();
-        if (wikidataResponse != null) {
-            WikidataEntity wikidataEntity = wikidataResponse.entities().get(wikidataEntityId);
+                .bodyToMono(WikidataResponse.class);
+        return wikidataResponse.map(response ->
+        {
+            WikidataEntity wikidataEntity = response.entities().get(wikidataEntityId);
             if (wikidataEntity != null) {
-                SiteLink enwiki = wikidataEntity.sitelinks().get("enwiki");
-                if (enwiki != null) {
-                    return new WikipediaLink(enwiki.url());
+                SiteLink siteLink = wikidataEntity.sitelinks().get("enwiki");
+                if (siteLink != null) {
+                    return new WikipediaLink(siteLink.url());
                 }
             }
-        }
-        throw new NotFoundException("Problem with " + wikidataEntityId);
+            throw new NotFoundException("Problem with " + wikidataEntityId);
+        });
     }
+
 }
+

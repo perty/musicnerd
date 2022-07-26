@@ -1,6 +1,5 @@
 package se.artcomputer.demo.musicnerd.wikipedia;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
@@ -8,12 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import se.artcomputer.demo.musicnerd.wikidata.WikidataService;
+import reactor.core.publisher.Mono;
+import se.artcomputer.demo.musicnerd.wikidata.WikipediaLink;
 
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 class WikipediaServiceTest {
     private static final String SOME_HTML_STRING = "<p>The html</p>";
@@ -40,8 +41,9 @@ class WikipediaServiceTest {
                 .setBody("{\"extract_html\": \"" + SOME_HTML_STRING + "\"}")
                 .addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE));
 
-        PageSummary pageSummary = wikipediaService.getSummary(SOME_WIKIPEDIA_LINK);
+        PageSummary pageSummary = wikipediaService.getSummary(Mono.just(new WikipediaLink(SOME_WIKIPEDIA_LINK))).block();
 
+        assertThat(pageSummary, notNullValue());
         assertThat(pageSummary.htmlString(), is(SOME_HTML_STRING));
     }
 }
