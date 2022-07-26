@@ -74,15 +74,15 @@ From a human user perspective, not so much.
 
 ## Design choices
 
-To create a service that is as responsive as possible, we selected `WebFlux` of `Spring boot`. This is allows for 
-reactive programming, specifically for non-blocking calls. 
+To create a service that is as responsive as possible, we selected [WebFlux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html) of [Spring boot](https://spring.io/projects/spring-boot). This is allows for 
+[reactive programming](https://www.reactivemanifesto.org/), specifically for non-blocking calls. 
 
 It turns out that the time spent looking up cover art, overshadows the time used to get Wikipedia data, so the gain is 
 very small. Further investigation may reveal improvements.
 
 Java `record` was used instead of classes where fit.
 
-Code is organized after the services that is used. Each package represents a port and adapter for that service. Only necessary records and classes are declared public.
+Code is organized after the services that are used. Each package represents a port and adapter for that service. Only necessary records and classes are declared public.
 
 The main service depends on all four packages.
 
@@ -96,6 +96,6 @@ Start the service locally from the repository root with `mvn spring-boot:run`.
 The service runs at port 8080. Some requests to try:
 - http://localhost:8080/musify/music-artist/details/f27ec8db-af05-4f36-916e-3d57f91ecf5e (Michael Jackson)
 - http://localhost:8080/musify/music-artist/details/5441c29d-3602-4898-b1a1-b77fa23b8e50 (David Bowie)
-- http://localhost:8080/musify/music-artist/details/510fcf21-a1f3-40af-9087-40593af86f7f (Barns Courtnety - results in an error)
+- http://localhost:8080/musify/music-artist/details/510fcf21-a1f3-40af-9087-40593af86f7f (Barns Courtney - results in an error)
 
 Response times may be very long, about 20 seconds.
