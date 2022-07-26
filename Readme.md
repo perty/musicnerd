@@ -87,7 +87,7 @@ Code is organized after the services that are used. Each package represents a po
 The main service depends on all four packages.
 
 ### Error handling
-The handling of errors is lacking heavily, see below for an example of a request where the cover art is not found. 
+It is quite common with missing cover art, see below for an example. Those are replaced with a `null` image url. The idea is that the whole request should not fail because of that.
 
 The `exception` package contains exception mapping that maps exceptions to error status codes.
 
@@ -98,6 +98,6 @@ Start the service locally from the repository root with `mvn spring-boot:run`.
 The service runs at port 8080. Some requests to try:
 - http://localhost:8080/musify/music-artist/details/f27ec8db-af05-4f36-916e-3d57f91ecf5e (Michael Jackson)
 - http://localhost:8080/musify/music-artist/details/5441c29d-3602-4898-b1a1-b77fa23b8e50 (David Bowie)
-- http://localhost:8080/musify/music-artist/details/510fcf21-a1f3-40af-9087-40593af86f7f (Barns Courtney - results in an error)
+- http://localhost:8080/musify/music-artist/details/510fcf21-a1f3-40af-9087-40593af86f7f (Barns Courtney - results in an missing cover art)
 
 Response times may be very long, about 20 seconds.

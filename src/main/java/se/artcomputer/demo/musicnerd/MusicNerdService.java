@@ -3,6 +3,7 @@ package se.artcomputer.demo.musicnerd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
@@ -14,7 +15,6 @@ import se.artcomputer.demo.musicnerd.musicbrainz.MusicBrainzId;
 import se.artcomputer.demo.musicnerd.musicbrainz.MusicBrainzService;
 import se.artcomputer.demo.musicnerd.musicbrainz.ReleaseGroup;
 import se.artcomputer.demo.musicnerd.wikidata.WikidataService;
-import se.artcomputer.demo.musicnerd.wikidata.WikipediaLink;
 import se.artcomputer.demo.musicnerd.wikipedia.PageSummary;
 import se.artcomputer.demo.musicnerd.wikipedia.WikipediaService;
 
@@ -70,7 +70,8 @@ public class MusicNerdService {
     }
 
     private Mono<Album> createAlbum(ReleaseGroup releaseGroup) {
-        Mono<FrontCoverImageUrl> coverArtUrlMono = coverArtArchiveService.getCoverArtUrl(releaseGroup.id());
+        Mono<FrontCoverImageUrl> coverArtUrlMono = coverArtArchiveService.getCoverArtUrl(releaseGroup.id())
+                .onErrorResume(WebClientResponseException.NotFound.class, (obj) -> Mono.just(new FrontCoverImageUrl(null)));
         return coverArtUrlMono.map(coverArtUrl -> new Album(
                 releaseGroup.id(),
                 releaseGroup.title(),
