@@ -98,6 +98,6 @@ Start the service locally from the repository root with `mvn spring-boot:run`.
 The service runs at port 8080. Some requests to try:
 - http://localhost:8080/musify/music-artist/details/f27ec8db-af05-4f36-916e-3d57f91ecf5e (Michael Jackson)
 - http://localhost:8080/musify/music-artist/details/5441c29d-3602-4898-b1a1-b77fa23b8e50 (David Bowie)
-- http://localhost:8080/musify/music-artist/details/510fcf21-a1f3-40af-9087-40593af86f7f (Barns Courtney - results in an missing cover art)
+- http://localhost:8080/musify/music-artist/details/510fcf21-a1f3-40af-9087-40593af86f7f (Barns Courtney - results in a missing cover art)
 
 Response times may be very long, about 20 seconds.
