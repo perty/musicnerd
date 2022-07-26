@@ -89,6 +89,8 @@ The main service depends on all four packages.
 ### Error handling
 The handling of errors is lacking heavily, see below for an example of a request where the cover art is not found. 
 
+The `exception` package contains exception mapping that maps exceptions to error status codes.
+
 ## How to run the service
 
 Start the service locally from the repository root with `mvn spring-boot:run`.

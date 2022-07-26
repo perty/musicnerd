@@ -8,18 +8,19 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @ControllerAdvice
 public class ExceptionHandling {
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionHandling.class);
 
-    @ExceptionHandler({GatewayException.class})
+    @ExceptionHandler({GatewayException.class, WebClientResponseException.BadGateway.class})
     public ResponseEntity<String> allExceptions(Exception exception) {
         LOG.error("Gateway problem {}", exception.getMessage());
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.GATEWAY_TIMEOUT);
     }
 
-    @ExceptionHandler({NotFoundException.class})
+    @ExceptionHandler({NotFoundException.class, WebClientResponseException.NotFound.class})
     public ResponseEntity<String> notFound(Exception exception) {
         LOG.info(exception.getMessage());
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
@@ -31,7 +32,7 @@ public class ExceptionHandling {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(BadRequestException.class)
+    @ExceptionHandler({BadRequestException.class, WebClientResponseException.BadRequest.class})
     public ResponseEntity<String> basRequest(Exception exception) {
         LOG.error(exception.getMessage());
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
