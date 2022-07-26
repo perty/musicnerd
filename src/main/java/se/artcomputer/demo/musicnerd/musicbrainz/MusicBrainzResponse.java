@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 
 import java.util.List;
 
-public record MusicBrainzResponse(String name,
+record MusicBrainzResponse(String name,
                                   String disambiguation,
                                   String gender,
                                   String country,
