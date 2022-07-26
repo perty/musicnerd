@@ -10,6 +10,8 @@ The `MusicBrainz` response is also used to find the cover art from `Cover Art Ar
 
 ### Sequence diagram
 
+The diagram illustrates the order of the service calls. Note the parallellism in the last calls. The `Wikidata` and `Wikipedia` calls are executed in parallell with the call to `Cover Art Archive`.
+
 ```mermaid
 sequenceDiagram
 actor user
@@ -30,6 +32,7 @@ and MusicNerd to Cover Art Archive
     MN->>CA: GET /release-group
     CA-->>MN: cover arts
 end
+MN-->>user: MusicNerd response
 ```
 
 ## Architecture

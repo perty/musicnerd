@@ -8,13 +8,21 @@ public final class MusicNerdResponse {
     private final String gender;
     private final String disambiguation;
     private final String country;
+    private final Description description;
 
-    public MusicNerdResponse(MusicBrainzId mbid, ArtistName name, ArtistGender artistGender, ArtistDisambiguation artistDisambiguation, ArtistCountry artistCountry) {
+    public MusicNerdResponse(
+            MusicBrainzId mbid,
+            ArtistName name,
+            ArtistGender artistGender,
+            ArtistDisambiguation artistDisambiguation,
+            ArtistCountry artistCountry,
+            Description description) {
         this.mbid = mbid.mbid();
         this.name = name.name();
         this.gender = artistGender.gender();
         this.disambiguation = artistDisambiguation.disambiguation();
         this.country = artistCountry.country();
+        this.description = description;
     }
 
     public String getMbid() {
@@ -35,5 +43,9 @@ public final class MusicNerdResponse {
 
     public String getCountry() {
         return country;
+    }
+
+    public Description getDescription() {
+        return description;
     }
 }

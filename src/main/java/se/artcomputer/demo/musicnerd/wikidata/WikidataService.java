@@ -8,8 +8,6 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import se.artcomputer.demo.musicnerd.exception.NotFoundException;
 
-import java.util.Optional;
-
 @Service
 public class WikidataService {
     private final WebClient webClient;
